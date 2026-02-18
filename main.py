@@ -2,9 +2,11 @@ import os
 
 from dotenv import load_dotenv
 from langchain.agents import create_agent
-from langchain_core.output_parsers.pydantic import PydanticOutputParser
+
+# from langchain_core.output_parsers.pydantic import PydanticOutputParser
 from langchain_core.prompts import PromptTemplate
-from langchain_core.runnables import RunnableLambda
+
+# from langchain_core.runnables import RunnableLambda
 from langchain_tavily import TavilySearch
 from langchain_xai import ChatXAI
 
@@ -17,11 +19,12 @@ load_dotenv()
 llm = ChatXAI(model="grok-4-1-fast-reasoning", temperature=0)
 
 # using what we imported from our schemas.py and imported from pydantic
-output_parser = PydanticOutputParser(pydantic_object=AgentResponse)
+# output_parser = PydanticOutputParser(pydantic_object=AgentResponse)
+structured_llm = llm.with_structured_output(AgentResponse)
 react_prompt_with_format_instructions = PromptTemplate(
     template=REACT_PROMPT_WITH_FORMAT_INSTRUCTIONS,
     input_variables=["input", "agent_scratchpad", "tool_names"],
-).partial(format_instructions=output_parser.get_format_instructions())
+).partial(format_instructions=structured_llm.format_instructions)
 
 system_prompt = react_prompt_with_format_instructions.format(
     tools="TavilySearch", tool_names="TavilySearch", input="", agent_scratchpad=""
@@ -39,9 +42,11 @@ def ask_agent(question: str):
     # Modern agents return a dict with an 'output' key
     raw_response = agent_executor.invoke({"messages": [("user", question)]})
     final_text = raw_response["messages"][-1].content.strip()
-    extract_output = RunnableLambda(lambda text: output_parser.parse(text))
-    structured = extract_output.invoke(final_text)
-    return structured.answer
+    # extract_output = RunnableLambda(lambda text: structured_llm.parse(text))
+    structured_ans = structured_llm.invoke(final_text)
+    # structured = extract_output.invoke(final_text)
+    # print(structured_ans.sentiment)
+    return structured_ans.answer
 
 
 # my code before incorporating RunnableLambda for parsing text in a formatted way to match schema and prompt
