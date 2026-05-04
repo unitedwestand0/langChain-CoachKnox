@@ -32,58 +32,30 @@ logging.getLogger("transformers").setLevel(logging.ERROR)
 st.set_page_config(page_title="MMA AI Coach - Grok Powered", layout="wide")
 
 
-st.title("LEGEND")
-st.subheader("Train with LEGEND, your AI MMA Coach! 🥊")
-st.caption("Legend is your AI-powered MMA coach, designed to help fighters of all levels improve their skills and knowledge. Whether you're a beginner looking to learn the basics or an experienced fighter seeking advanced techniques, LEGEND is here to guide you on your martial arts journey. With access to a vast knowledge base of MMA techniques, training tips, and fight strategies, LEGEND provides personalized coaching and support to help you reach your full potential in the octagon. Let's get started and unleash your inner champion with LEGEND! 🥋💪")
+#st.title("Welcome to LEGEND")
+#st.subheader("Welcome to LEGEND")
+#st.subheader("I'm Conor McGregor, your AI Boxing Coach!")
+#st.caption("I'm designed to help fighters like you improve your skills and knowledge.")
 
 # =========================== 3D CHATBOT MODEL DISPLAY =========================== #
 
 col1, col2, col3 = st.columns([1, 3, 1])
 with col2:
-    st.markdown("Conor Mcgregor")  # Empty space for centering
-html(f"""
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three-gltf-loader@1.0.0/lib/index.js"></script>
+    st.markdown("")  # Empty space for centering
+html("""
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script>
 
-<div id="viewer" style="width:100%; height:520px; background:#111;"></div>
-
-<script>
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x111111);
-    
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    camera.position.set(0, 2, 8);
-    
-    const renderer = new THREE.WebGLRenderer({{ antialias: true }});
-    renderer.setSize(620, 520);
-    document.getElementById('viewer').appendChild(renderer.domElement);
-    
-    const light = new THREE.DirectionalLight(0xffffff, 1.2);
-    light.position.set(5, 10, 8);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0x666666, 0.8));
-    
-    // Use the correct loader from the script we loaded
-    const loader = new THREE.GLTFLoader();
-    
-    loader.load("models/conorMcGregor/conorMcGregor.glb", (gltf) => {{
-        const model = gltf.scene;
-        model.scale.set(1.4, 1.4, 1.4);
-        model.position.y = -2.8;
-        scene.add(model);
-        console.log("Model loaded successfully!");
-    }}, undefined, (error) => {{
-        console.error("Error loading model:", error);
-    }});
-    
-    function animate() {{
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }}
-    animate();
-</script>
-""", height=550)
-
+<model-viewer 
+    src="https://files.catbox.moe/ppcgg0.glb"
+    alt="Conor McGregor 3D Model"
+    auto-rotate 
+    camera-controls 
+    style="width:100%; height:600px; background:#111;"
+    shadow-intensity="1"
+    exposure="0.8"
+    camera-orbit="45deg 75deg 60m">
+</model-viewer>
+""", height=650)
 # =========================== SIDEBAR WITH COACH KNOX =========================== #
 
 # Sidebar Settings
@@ -92,6 +64,10 @@ with st.sidebar:
     # centering his image 
     col1, col2, col3 = st.columns([1, 5, 1])
     with col2:
+
+        st.title("Welcome to LEGEND")
+        st.subheader("I'm Conor McGregor, your AI Boxing Coach!")
+        st.caption("I'm designed to help fighters like you improve your skills and knowledge.")
 
     # settings for the LLM parameters to allow users to customize their coaching experience
         st.header("Coach Settings")

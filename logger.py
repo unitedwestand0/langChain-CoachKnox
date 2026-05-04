@@ -17,23 +17,21 @@ def log_info(message: str, color: str = Colors.CYAN):
     print(f"{color}ℹ️  {message}{Colors.END}")
 
 
-def log_success(message: str):
-    """Log success message in green"""
-    print(f"{Colors.GREEN}✅ {message}{Colors.END}")
+def log_success(message: str, color: str = Colors.GREEN):
+    """Log success message with color"""
+    print(f"{color}✅ {message}{Colors.END}")
 
 
-def log_error(message: str):
-    """Log error message in red"""
-    print(f"{Colors.RED}❌ {message}{Colors.END}")
+def log_warning(msg: str, color: str = Colors.YELLOW):
+    print(f"{color}WARNING: {msg}{Colors.END}")
+
+def log_error(msg: str, color: str = Colors.RED):
+    print(f"{color}ERROR: {msg}{Colors.END}")
 
 
-def log_warning(message: str):
-    """Log warning message in yellow"""
-    print(f"{Colors.YELLOW}⚠️  {message}{Colors.END}")
 
-
-def log_header(message: str):
+def log_header(message: str, color: str = Colors.PURPLE):
     """Log header message with emphasis"""
-    print(f"\n{Colors.BOLD}{Colors.PURPLE}{'='*60}{Colors.END}")
-    print(f"{Colors.BOLD}{Colors.PURPLE}🚀 {message}{Colors.END}")
-    print(f"{Colors.BOLD}{Colors.PURPLE}{'='*60}{Colors.END}\n")
+    print(f"\n{Colors.BOLD}{color}{'='*60}{Colors.END}")
+    print(f"{Colors.BOLD}{color}🚀 {message}{Colors.END}")
+    print(f"{Colors.BOLD}{color}{'='*60}{Colors.END}\n")
